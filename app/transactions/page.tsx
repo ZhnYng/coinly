@@ -12,10 +12,9 @@ export default async function Page({
   };
 }) {
   const remaining = await fetchMonthNet(searchParams.month, searchParams.year)
-  console.log(remaining)
   return (
     <main>
-      {remaining && <div>
+      {(remaining == 0 || remaining) && <div>
         <h4 className="font-bold text-center mt-3 text-lg">
           Net: {formatCurrency(remaining)}
         </h4>

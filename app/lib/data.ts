@@ -25,7 +25,7 @@ export async function fetchMonthlyTransactions(
     })
     return filteredTransactions;
   } catch (err) {
-    return err
+    return []
   }
 }
 
@@ -53,6 +53,6 @@ export async function fetchMonthNet(
   
     return net[0]._sum.amount
   } catch (err) {
-    return '0'
+    return 0
   }
 }

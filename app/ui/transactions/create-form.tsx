@@ -6,9 +6,11 @@ import { useFormState } from 'react-dom';
 import { Button } from '../button';
 import { createTransaction } from '@/app/lib/actions';
 import { toLocalISOString } from '@/app/lib/utils';
+import { useRouter } from 'next/navigation';
 
 export default function Form({ categories }: { categories: string[] }) {
   const initialState = { message: '', errors: {} };
+  const router = useRouter()
   const [state, dispatch] = useFormState(createTransaction, initialState);
 
   return (
@@ -136,6 +138,7 @@ export default function Form({ categories }: { categories: string[] }) {
       <div className="mt-6 flex justify-end gap-4">
         <Link
           href="/transactions"
+          onClick={() => router.back()}
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
