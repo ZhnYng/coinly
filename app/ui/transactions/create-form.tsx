@@ -1,41 +1,34 @@
 "use client";
 
-import { CheckIcon, CircleDollarSign, ClockIcon, UserCircleIcon } from 'lucide-react';
-// import { CustomerField } from '@/app/lib/definitions';
+import { Boxes, Calendar, CheckIcon, CircleDollarSign, ClockIcon, TextIcon, UserCircleIcon } from 'lucide-react';
 import Link from 'next/link';
-// import {
-//   CheckIcon,
-//   ClockIcon,
-//   CurrencyDollarIcon,
-//   UserCircleIcon,
-// } from '@heroicons/react/24/outline';
-// import { Button } from '@/app/ui/button';
-// import { createInvoice } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '../button';
+import { createTransaction } from '@/app/lib/actions';
+import { toLocalISOString } from '@/app/lib/utils';
 
 export default function Form({ categories }: { categories: string[] }) {
-  const initialState = { message: null, errors: {} };
-  // const [state, dispatch] = useFormState(createInvoice, initialState);
+  const initialState = { message: '', errors: {} };
+  const [state, dispatch] = useFormState(createTransaction, initialState);
 
   return (
-    <form>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Customer Name */}
+    <form action={dispatch}>
+      <div className="rounded-md bg-gray-950 py-4 md:p-6">
+        {/* Category */}
         <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            Choose customer
+          <label htmlFor="category" className="mb-2 block text-sm font-medium">
+            Choose category
           </label>
           <div className="relative">
             <select
-              id="customer"
-              name="customerId"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              id="category"
+              name="category"
+              className="peer block w-full cursor-pointer rounded-md border text-gray-700 border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-400"
               defaultValue=""
-              aria-describedby="customer-error"
+              aria-describedby="category-error"
             >
               <option value="" disabled>
-                Select a customer
+                Select a category
               </option>
               {categories.map((category, idx) => (
                 <option key={idx} value={category}>
@@ -43,19 +36,19 @@ export default function Form({ categories }: { categories: string[] }) {
                 </option>
               ))}
             </select>
-            <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+            <Boxes className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-700" />
           </div>
-          {/* <div id="customer-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.customerId &&
-              state.errors.customerId.map((error: string) => (
+          <div id="customer-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.category &&
+              state.errors.category.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
               ))}
-          </div> */}
+          </div>
         </div>
 
-        {/* Invoice Amount */}
+        {/* Transaction Amount */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
             Choose an amount
@@ -68,87 +61,86 @@ export default function Form({ categories }: { categories: string[] }) {
                 type="number"
                 step="0.01"
                 placeholder="Enter USD amount"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md border text-gray-700 border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-400"
                 aria-describedby="amount-error"
               />
-              <CircleDollarSign className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+              <CircleDollarSign className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-700 peer-focus:text-gray-900" />
             </div>
-            {/* <div id="amount-error" aria-live="polite" aria-atomic="true">
+            <div id="amount-error" aria-live="polite" aria-atomic="true">
               {state.errors?.amount &&
                 state.errors.amount.map((error: string) => (
                   <p className="mt-2 text-sm text-red-500" key={error}>
                     {error}
                   </p>
                 ))}
-            </div> */}
+            </div>
           </div>
         </div>
 
-        {/* Invoice Status */}
-        <fieldset>
-          <legend className="mb-2 block text-sm font-medium">
-            Set the invoice status
-          </legend>
-          <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
-            <div className="flex gap-4">
-              <div className="flex items-center">
-                <input
-                  id="pending"
-                  name="status"
-                  type="radio"
-                  value="pending"
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                  aria-describedby="invoice-error"
-                />
-                <label
-                  htmlFor="pending"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
-                >
-                  Pending <ClockIcon className="h-4 w-4" />
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="paid"
-                  name="status"
-                  type="radio"
-                  value="paid"
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="paid"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
-                >
-                  Paid <CheckIcon className="h-4 w-4" />
-                </label>
-              </div>
+        {/* Description */}
+        <div className="mb-4">
+          <label htmlFor="description" className="mb-2 block text-sm font-medium">
+            Description
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="description"
+                name="description"
+                type="text"
+                placeholder="Macdonalds"
+                className="peer block w-full rounded-md border text-gray-700 border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-400"
+                aria-describedby="description-error"
+              />
+              <TextIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-700 peer-focus:text-gray-900" />
+            </div>
+            <div id="description-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.description &&
+                state.errors.description.map((error: string) => (
+                  <p className="mt-2 text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
             </div>
           </div>
-          <div id="invoice-error" aria-live="polite" aria-atomic="true">
-            {/* {state.errors?.status &&
-              state.errors.status.map((error: string) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-              ))} */}
+        </div>
+
+        {/* Date */}
+        <div className="mb-4">
+          <label htmlFor="description" className="mb-2 block text-sm font-medium">
+            Date
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="date"
+                name="date"
+                type="datetime-local"
+                defaultValue={toLocalISOString(new Date())}
+                className="peer block w-full rounded-md border text-gray-700 border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-400"
+                aria-describedby="date-error"
+              />
+              <Calendar className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-700 peer-focus:text-gray-900" />
+            </div>
+            <div id="date-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.date &&
+                state.errors.date.map((error: string) => (
+                  <p className="mt-2 text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
           </div>
-        </fieldset>
-        {/* <div id="invoice-error" aria-live="polite" aria-atomic="true">
-          {state.message &&
-            <p className="mt-2 text-sm text-red-500">
-              {state.message}
-            </p>
-          }
-        </div> */}
+        </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href="/dashboard/invoices"
+          href="/transactions"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
         </Link>
-        <Button type="submit">Create Invoice</Button>
+        <Button type="submit">Create Transaction</Button>
       </div>
     </form>
   );

@@ -1,9 +1,10 @@
 import { PiggyBank } from "lucide-react";
 import Pagination from "./pagination";
+import { fetchMonthNet } from "@/app/lib/data";
 
 export default function TransactionHeader(){
   return (
-    <div className="rounded-b-3xl w-screen bg-green-600 p-3">
+    <div className="rounded-b-xl w-screen bg-green-600 p-3">
       <div className="flex justify-between items-center">
         <PiggyBank size='30' className="w-20" />
         <div className="flex w-1/3 justify-between items-center">
@@ -14,11 +15,11 @@ export default function TransactionHeader(){
           <option value="2024">2024</option>
         </select>
       </div>
-      <div>
+      {/* <div>
         <h4 className="font-bold text-center mt-3 text-lg">
-          Remaining: $40.00
+          Remaining: 40.00
         </h4>
-      </div>
+      </div> */}
     </div>
   )
 }

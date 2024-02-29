@@ -1,9 +1,7 @@
-import { ChevronLeft, ChevronRight, PiggyBank } from "lucide-react";
-import Pagination from "../ui/transactions/pagination";
-import { fetchMonthlyTransactions } from "../lib/data";
+import { fetchMonthNet, fetchMonthlyTransactions } from "../lib/data";
 import TransactionsTable from "../ui/transactions/table";
 import { CreateTransaction } from "../ui/transactions/buttons";
-import TransactionHeader from "../ui/transactions/header";
+import { formatCurrency } from "../lib/utils";
 
 export default async function Page({
   searchParams,
@@ -13,13 +11,15 @@ export default async function Page({
     year: string;
   };
 }) {
-  const filteredTransactions = await fetchMonthlyTransactions(
-    searchParams.month,
-    searchParams.year
-  );
-
+  const remaining = await fetchMonthNet(searchParams.month, searchParams.year)
+  console.log(remaining)
   return (
     <main>
+      {remaining && <div>
+        <h4 className="font-bold text-center mt-3 text-lg">
+          Net: {formatCurrency(remaining)}
+        </h4>
+      </div>}
       <div className="fixed bottom-4 right-4">
         <CreateTransaction />
       </div>

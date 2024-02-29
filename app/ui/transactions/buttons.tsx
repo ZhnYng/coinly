@@ -14,7 +14,7 @@ export function CreateTransaction() {
   );
 }
 
-export function UpdateTransaction({ id }: { id: string }) {
+export function UpdateTransaction({ id }: { id: number }) {
   return (
     <Link
       href={`/dashboard/invoices/${id}/edit`}
@@ -25,7 +25,7 @@ export function UpdateTransaction({ id }: { id: string }) {
   );
 }
 
-export function DeleteTransaction({ id }: { id: string }) {
+export function DeleteTransaction({ id }: { id: number }) {
   // const deleteTransactionWithId = deleteTransaction.bind(null, id);
   return (
     // <form action={deleteTransactionWithId}>

@@ -51,7 +51,7 @@ export default async function TransactionsTable({
                     <p className="text-xl font-medium">
                       {formatCurrency(transaction.amount)}
                     </p>
-                    <p>{formatDateToLocal(transaction.date)}</p>
+                    <p>{formatDateToLocal(transaction.date.toDateString())}</p>
                   </div>
                   <div className="flex justify-end gap-2">
                     <UpdateTransaction id={transaction.id} />
@@ -100,7 +100,7 @@ export default async function TransactionsTable({
                     {formatCurrency(transaction.amount)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatDateToLocal(transaction.date)}
+                    {formatDateToLocal(transaction.date.toDateString())}
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
