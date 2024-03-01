@@ -4,6 +4,7 @@ import { Button } from '../ui/button';
 import { useFormState, useFormStatus } from 'react-dom';
 import { authorization } from '@/app/lib/actions';
 import { AlertCircle, ArrowRight, KeyRound, Mail, PiggyBank, User } from 'lucide-react';
+import Link from 'next/link';
 
 export default function SignupPage() {
   const initialState = { message: '', errors: {} };
@@ -108,6 +109,11 @@ export default function SignupPage() {
               </div>
             </div>
             <SignupButton />
+            <div className='text-gray-400 text-sm underline mt-4'>
+              <Link href={"/login"}>
+                Already have an account? Login.
+              </Link>
+            </div>
             <div
               className="flex h-8 items-end space-x-1"
               aria-live="polite"

@@ -4,6 +4,7 @@ import { AlertCircle, ArrowRight, KeyRound, Mail, PiggyBank } from 'lucide-react
 import { authenticate } from '../lib/actions';
 import { useFormState, useFormStatus } from 'react-dom';
 import { Button } from '../ui/button';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const initialState = { message: '', errors: {} };
@@ -44,7 +45,7 @@ export default function LoginPage() {
                 </div>
               </div>
               <div id="email-error" aria-live="polite" aria-atomic="true">
-                {errorMessage.errors?.email &&
+                {errorMessage?.errors?.email &&
                   errorMessage.errors.email.map((error: string) => (
                     <p className="mt-2 text-sm text-red-500" key={error}>
                       {error}
@@ -72,7 +73,7 @@ export default function LoginPage() {
                 </div>
               </div>
               <div id="password-error" aria-live="polite" aria-atomic="true">
-                {errorMessage.errors?.password &&
+                {errorMessage?.errors?.password &&
                   errorMessage.errors.password.map((error: string) => (
                     <p className="mt-2 text-sm text-red-500" key={error}>
                       {error}
@@ -81,6 +82,11 @@ export default function LoginPage() {
               </div>
             </div>
             <LoginButton />
+            <div className='text-gray-400 text-sm underline mt-4'>
+              <Link href={"/signup"}>
+                Don't have an account? Sign up.
+              </Link>
+            </div>
             <div
               className="flex h-8 items-end space-x-1"
               aria-live="polite"

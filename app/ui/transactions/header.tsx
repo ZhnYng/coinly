@@ -15,11 +15,6 @@ export default function TransactionHeader(){
           <option value="2024">2024</option>
         </select>
       </div>
-      {/* <div>
-        <h4 className="font-bold text-center mt-3 text-lg">
-          Remaining: 40.00
-        </h4>
-      </div> */}
     </div>
   )
 }

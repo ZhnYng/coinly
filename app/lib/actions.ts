@@ -1,14 +1,12 @@
 "use server";
 
-import { effect, z } from "zod";
-import { PrismaClient } from "@prisma/client";
+import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { signIn } from '@/auth';
+import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import bcrypt from "bcrypt";
-
-const prisma = new PrismaClient()
+import { prisma } from "./_base";
 
 const FormSchema = z.object({
   userId: z.number(),
@@ -60,22 +58,39 @@ export async function createTransaction(prevState: State, formData: FormData) {
   const amountInCents = amount * 100;
 
   // Insert data into the database
-  try {
-    await prisma.transaction.create({
-      data: {
-        userId: 1,
-        date: date,
-        description: description,
-        amount: amountInCents,
-        category: category,
+  const session = await auth();
+  if(session?.user?.email){
+    const currentEmail = session.user.email
+    try {
+      const userId = await prisma.user.findFirst({
+        where: {
+          email: currentEmail
+        }
+      })
+
+      if(userId?.id){
+        await prisma.transaction.create({
+          data: {
+            userId: userId.id,
+            date: date,
+            description: description,
+            amount: amountInCents,
+            category: category,
+          }
+        })
+      } else {
+        return { message: 'User cannot be found.' }
       }
-    })
-  } catch (error) {
-    // If a database error occurs, return a more specific error.
-    return {
-      message: 'Database Error: Failed to Create Transaction.',
-    };
+    } catch (error) {
+      // If a database error occurs, return a more specific error.
+      return {
+        message: 'Database Error: Failed to Create Transaction.',
+      };
+    }
+  } else {
+    return { message: 'Session does not contain user email.' }
   }
+  
 
   const month = date.getMonth()
   const year = date.getFullYear()
@@ -122,15 +137,46 @@ export async function createTransaction(prevState: State, formData: FormData) {
 //   redirect('/dashboard/invoices');
 // }
 
-// export async function deleteInvoice(id: string) {
-//   try {
-//     await sql`DELETE FROM invoices WHERE id = ${id}`;
-//     revalidatePath('/dashboard/invoices');
-//     return { message: 'Deleted Invoice.' };
-//   } catch (error) {
-//     return { message: 'Database Error: Failed to Delete Invoice.' };
-//   }
-// }
+export async function deleteTransaction(id: number) {
+  const session = await auth();
+
+  try {
+    if(session?.user?.email){
+      const user = await prisma.user.findFirst({
+        where: {
+          email: session?.user?.email,
+        },
+        select: {
+          id: true
+        }
+      })
+
+      const transaction = await prisma.transaction.findFirst({
+        where: {
+          userId: user?.id,
+          id: id
+        }
+      })
+  
+      if(transaction) {
+        await prisma.transaction.delete({
+          where: {
+            id: id
+          }
+        })
+      } else {
+        return { message: 'Authentication failed. Current user does not own this record.' }
+      }
+  
+      revalidatePath('/transactions');
+      return { message: 'Deleted Transaction.' };
+    } else {
+      return { message: 'User not found.' }
+    }
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Transaction.' };
+  }
+}
 
 const AuthFormSchema = z.object({
   email: z.string().email("Please enter a valid email."),
@@ -151,7 +197,7 @@ export type AuthState = {
 
 const Authenticate = AuthFormSchema.omit({ username: true });
 export async function authenticate(
-  prevState: AuthState,
+  prevState: AuthState | undefined,
   formData: FormData,
 ) {
   // Validate form using Zod
@@ -169,8 +215,7 @@ export async function authenticate(
   }
 
   try {
-    const value = await signIn('credentials', formData);
-    return { message: "Authentication succeed!" }
+    await signIn('credentials', formData);
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

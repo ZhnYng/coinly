@@ -4,6 +4,7 @@ import { Button } from './button';
 import { useFormState, useFormStatus } from 'react-dom';
 import { authenticate } from '@/app/lib/actions';
 import { AlertCircle, ArrowRight, KeyRound, Mail } from 'lucide-react';
+import Link from 'next/link';
 
 export default function LoginForm() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
@@ -64,7 +65,7 @@ export default function LoginForm() {
           {errorMessage && (
             <>
               <AlertCircle className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
+              <p className="text-sm text-red-500">{errorMessage.message}</p>
             </>
           )}
         </div>
@@ -77,8 +78,13 @@ function LoginButton() {
   const { pending } = useFormStatus();
  
   return (
+    <>
     <Button className="mt-4 w-full" aria-disabled={pending}>
       Log in <ArrowRight className="ml-auto h-5 w-5 text-gray-50" />
     </Button>
+    <Link href="/signup">
+
+    </Link>
+    </>
   );
 }

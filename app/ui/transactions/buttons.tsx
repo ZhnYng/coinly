@@ -1,6 +1,9 @@
+"use client"
+
 import { PencilIcon, PlusIcon, TrashIcon } from 'lucide-react';
 import Link from 'next/link';
-// import { deleteTransaction } from '@/app/lib/actions';
+import { deleteTransaction } from '@/app/lib/actions';
+import { useFormState } from 'react-dom';
 
 export function CreateTransaction() {
   return (
@@ -17,7 +20,7 @@ export function CreateTransaction() {
 export function UpdateTransaction({ id }: { id: number }) {
   return (
     <Link
-      href={`/dashboard/invoices/${id}/edit`}
+      href={`/transactions/${id}/edit`}
       className="rounded-md border p-2 hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />
@@ -26,10 +29,11 @@ export function UpdateTransaction({ id }: { id: number }) {
 }
 
 export function DeleteTransaction({ id }: { id: number }) {
-  // const deleteTransactionWithId = deleteTransaction.bind(null, id);
+  const deleteTransactionWithId = deleteTransaction.bind(null, id);
+  const [error, dispatch] = useFormState(deleteTransactionWithId, { message: '' });
+
   return (
-    // <form action={deleteTransactionWithId}>
-    <form>
+    <form action={dispatch}>
       <button className="rounded-md border p-2 hover:bg-gray-100">
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-4" />

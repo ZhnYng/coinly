@@ -2,21 +2,29 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient()
+
 async function seed(){
-  const insertedUser = await prisma.user.upsert({
-    where: {
-      email: 'test@gmail.com',
-    },
-    create: {
-      username: "test",
-      email: "test@gmail.com",
-      password: "123456"
-    },
-    update: {
-      username: "test",
-      password: "123456"
-    }
-  })
+  const password = "123456"
+  let insertedUser = {}
+
+  bcrypt.hash(password, 10, async (err, hash) => {
+    if(err) console.error(err);
+
+    insertedUser = await prisma.user.upsert({
+      where: {
+        email: 'test@gmail.com',
+      },
+      create: {
+        username: "test",
+        email: "test@gmail.com",
+        password: hash
+      },
+      update: {
+        username: "test",
+        password: hash
+      }
+    })
+  });
 
   const insertedTransactions = await prisma.transaction.createMany({
     data: [
