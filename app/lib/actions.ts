@@ -1,6 +1,6 @@
 "use server";
 
-import { z } from "zod";
+import { effect, z } from "zod";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -140,9 +140,18 @@ const AuthFormSchema = z.object({
   password: z.string().min(6),
 })
 
+export type AuthState = {
+  errors?: {
+    email?: string[];
+    username?: string[];
+    password?: string[];
+  };
+  message?: string | null;
+};
+
 const Authenticate = AuthFormSchema.omit({ username: true });
 export async function authenticate(
-  prevState: string | undefined,
+  prevState: AuthState,
   formData: FormData,
 ) {
   // Validate form using Zod
@@ -160,28 +169,20 @@ export async function authenticate(
   }
 
   try {
-    await signIn('credentials', formData);
+    const value = await signIn('credentials', formData);
+    return { message: "Authentication succeed!" }
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case 'CredentialsSignin':
-          return 'Invalid credentials.';
+          return {message: 'Invalid credentials.'};
         default:
-          return 'Something went wrong.';
+          return {message: 'Something went wrong.'};
       }
     }
-    throw error;
+    throw error
   }
 }
-
-export type AuthState = {
-  errors?: {
-    email?: string[];
-    username?: string[];
-    password?: string[];
-  };
-  message?: string | null;
-};
 
 export async function authorization(
   prevState: AuthState,
@@ -198,7 +199,7 @@ export async function authorization(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Authentication failed.',
+      message: 'Missing Fields. Authorization failed.',
     };
   }
   
