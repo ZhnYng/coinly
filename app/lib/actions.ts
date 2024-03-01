@@ -4,10 +4,11 @@ import { z } from "zod";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient()
-// import { signIn } from '@/auth';
-// import { AuthError } from 'next-auth';
 
 const FormSchema = z.object({
   userId: z.number(),
@@ -131,21 +132,88 @@ export async function createTransaction(prevState: State, formData: FormData) {
 //   }
 // }
 
-// export async function authenticate(
-//   prevState: string | undefined,
-//   formData: FormData,
-// ) {
-//   try {
-//     await signIn('credentials', formData);
-//   } catch (error) {
-//     if (error instanceof AuthError) {
-//       switch (error.type) {
-//         case 'CredentialsSignin':
-//           return 'Invalid credentials.';
-//         default:
-//           return 'Something went wrong.';
-//       }
-//     }
-//     throw error;
-//   }
-// }
+const AuthFormSchema = z.object({
+  email: z.string().email("Please enter a valid email."),
+  username: z.string({
+    invalid_type_error: "Please enter a username.",
+  }),
+  password: z.string().min(6),
+})
+
+const Authenticate = AuthFormSchema.omit({ username: true });
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  // Validate form using Zod
+  const validatedFields = Authenticate.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+  });
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Authentication failed.',
+    };
+  }
+
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
+}
+
+export type AuthState = {
+  errors?: {
+    email?: string[];
+    username?: string[];
+    password?: string[];
+  };
+  message?: string | null;
+};
+
+export async function authorization(
+  prevState: AuthState,
+  formData: FormData,
+) {
+  // Validate form using Zod
+  const validatedFields = AuthFormSchema.safeParse({
+    email: formData.get('email'),
+    username: formData.get('username'),
+    password: formData.get('password'),
+  });
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Authentication failed.',
+    };
+  }
+  
+  try {
+    bcrypt.hash(validatedFields.data.password, 10, async (err, hash) => {
+      await prisma.user.create({
+        data: {...validatedFields.data, password: hash}
+      })
+    });
+  } catch (error) {
+    console.log(error)
+    return {
+      message: 'Database Error: Failed to Create User.',
+    };
+  }
+  
+  redirect(`/login`);
+}
