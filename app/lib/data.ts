@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import { transactions } from "../lib/placeholder-data"
 import { prisma } from "./_base";
 
 export async function fetchMonthlyTransactions(
@@ -80,5 +79,18 @@ export async function fetchMonthNet(
   
   } catch (err) {
     return 0
+  }
+}
+
+export async function fetchTransactionById(transactionId: string){
+  try {
+    const transaction = await prisma.transaction.findFirst({
+      where: {
+        id: Number(transactionId)
+      }
+    })
+    return transaction
+  } catch (err) {
+    console.error("Transaction not found")
   }
 }

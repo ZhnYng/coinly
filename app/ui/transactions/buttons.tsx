@@ -4,6 +4,7 @@ import { PencilIcon, PlusIcon, TrashIcon } from 'lucide-react';
 import Link from 'next/link';
 import { deleteTransaction } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
+import toast from 'react-hot-toast';
 
 export function CreateTransaction() {
   return (
@@ -21,7 +22,7 @@ export function UpdateTransaction({ id }: { id: number }) {
   return (
     <Link
       href={`/transactions/${id}/edit`}
-      className="rounded-md border p-2 hover:bg-gray-100"
+      className="rounded-md border p-2 hover:bg-gray-800"
     >
       <PencilIcon className="w-5" />
     </Link>
@@ -29,12 +30,16 @@ export function UpdateTransaction({ id }: { id: number }) {
 }
 
 export function DeleteTransaction({ id }: { id: number }) {
-  const deleteTransactionWithId = deleteTransaction.bind(null, id);
+  const deleteTransactionWithId = deleteTransaction.bind(null, 4);
   const [error, dispatch] = useFormState(deleteTransactionWithId, { message: '' });
+
+  if(error.message){
+    toast.error(error.message)
+  }
 
   return (
     <form action={dispatch}>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
+      <button className="rounded-md border p-2 hover:bg-gray-800">
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-4" />
       </button>

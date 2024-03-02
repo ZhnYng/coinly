@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
  
 export default async function Page() {
-  // const customers = await fetchCustomers();
   const router = useRouter()
   const categories = ['Food', 'Transport', 'Apparel', 'Allowance', 'Freelance', 'Salary', 'Others']
  

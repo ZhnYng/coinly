@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { poppins } from "./ui/fonts";
-
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: {
@@ -18,7 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <Toaster position="bottom-left" />
+        {children}
+      </body>
     </html>
   );
 }

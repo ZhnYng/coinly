@@ -1,37 +1,23 @@
-import Form from '@/app/ui/transactions/edit-form';
-import Breadcrumbs from '@/app/ui/transactions/breadcrumbs';
-import { fetchCustomers, fetchInvoiceById } from '@/app/lib/data';
-import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Edit transactions',
-};
+import { fetchTransactionById } from '@/app/lib/data';
+import { Button } from '@/app/ui/button';
+import { useRouter } from 'next/navigation';
+import TransactionForm from './transaction-form';
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const id = params.id;
-  const [invoice, customers] = await Promise.all([
-    fetchInvoiceById(id),
-    fetchCustomers(),
-  ]);
 
-  if (!invoice) {
-    notFound();
-  }
+  const id = params.id;
+
+  const currentTransaction = await fetchTransactionById(id)
+  // const router = useRouter()
 
   return (
-    <main>
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: 'Invoices', href: '/dashboard/invoices' },
-          {
-            label: 'Edit Invoice',
-            href: `/dashboard/invoices/${id}/edit`,
-            active: true,
-          },
-        ]}
+    <main className="p-10">
+      {currentTransaction &&
+      <TransactionForm 
+        id={id} 
+        currentTransaction={currentTransaction}
       />
-      <Form invoice={invoice} customers={customers} />
+      }
     </main>
   );
 }

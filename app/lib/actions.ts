@@ -100,42 +100,70 @@ export async function createTransaction(prevState: State, formData: FormData) {
   redirect(`/transactions?month=${month+1}&&year=${year}`);
 }
 
-// const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+const UpdateTransaction = FormSchema.omit({ userId: true });
+export async function updateTransaction(
+  id: string,
+  prevState: State,
+  formData: FormData,
+) {
+  const validatedFields = UpdateTransaction.safeParse({
+    category: formData.get('category'),
+    amount: formData.get('amount'),
+    date: formData.get('date'),
+    description: formData.get('description'),
+  });
 
-// export async function updateInvoice(
-//   id: string,
-//   prevState: State,
-//   formData: FormData,
-// ) {
-//   const validatedFields = UpdateInvoice.safeParse({
-//     customerId: formData.get('customerId'),
-//     amount: formData.get('amount'),
-//     status: formData.get('status'),
-//   });
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update Invoice.',
+    };
+  }
 
-//   if (!validatedFields.success) {
-//     return {
-//       errors: validatedFields.error.flatten().fieldErrors,
-//       message: 'Missing Fields. Failed to Update Invoice.',
-//     };
-//   }
+  const { category, amount, date, description } = validatedFields.data;
+  const amountInCents = amount * 100;
 
-//   const { customerId, amount, status } = validatedFields.data;
-//   const amountInCents = amount * 100;
+  const session = await auth();
+  if(session?.user?.email){
+    try {
+      const recordOwner = await prisma.transaction.findFirst({
+        where: {
+          id: Number(id),
+        },
+        select: {
+          user: {
+            select: {
+              email: true,
+              id: true
+            }
+          }
+        }
+      })
 
-//   try {
-//     await sql`
-//       UPDATE invoices
-//       SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
-//       WHERE id = ${id}
-//     `;
-//   } catch (error) {
-//     return { message: 'Database Error: Failed to Update Invoice.' };
-//   }
+      if (session.user.email === recordOwner?.user.email){
+        await prisma.transaction.update({
+          where: {
+            id: Number(id),
+          },
+          data: {
+           ...validatedFields,
+           amount: amountInCents,
+          }
+        })
+      } else {
+        return { message: "Unauthorized action. You do not own this record." }
+      }
+    } catch (error) {
+      // If a database error occurs, return a more specific error.
+      return {
+        message: 'Database Error: Failed to Update Transaction.',
+      };
+    }
+  }
 
-//   revalidatePath('/dashboard/invoices');
-//   redirect('/dashboard/invoices');
-// }
+  revalidatePath('/dashboard/invoices');
+  redirect('/dashboard/invoices');
+}
 
 export async function deleteTransaction(id: number) {
   const session = await auth();

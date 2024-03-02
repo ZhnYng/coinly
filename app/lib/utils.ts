@@ -5,6 +5,10 @@ export const formatCurrency = (amount: number) => {
   });
 };
 
+export const formatMoney = (amount: number) => {
+  return (amount / 100).toFixed(2)
+}
+
 export const formatDateToLocal = (
   dateStr: string,
   locale: string = 'en-US',
