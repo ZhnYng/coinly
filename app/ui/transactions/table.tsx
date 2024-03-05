@@ -41,17 +41,17 @@ export default async function TransactionsTable({
                   <div>
                     <div className="mb-2 flex items-center">
                       {getIconForCategory(transaction.category)}
-                      <p>{transaction.description}</p>
+                      <p data-testid="transaction-description-mobile">{transaction.description}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{transaction.category}</p>
+                    <p className="text-sm text-gray-500" data-testid="transaction-category-mobile">{transaction.category}</p>
                   </div>
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
-                    <p className="text-xl font-medium">
+                    <p className="text-xl font-medium" data-testid="transaction-amount-mobile">
                       {formatCurrency(transaction.amount)}
                     </p>
-                    <p>{formatDateToLocal(transaction.date.toDateString())}</p>
+                    <p data-testid="transaction-date-mobile">{formatDateToLocal(transaction.date.toDateString())}</p>
                   </div>
                   <div className="flex justify-end gap-2">
                     <UpdateTransaction id={transaction.id} />

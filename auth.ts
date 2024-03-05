@@ -6,21 +6,21 @@ import bcrypt from "bcrypt";
 import { prisma } from "./app/lib/_base";
 
 async function getUser(email: string) {
-  try {
-    const user = await prisma.user.findFirstOrThrow({
-      where: {
-        email: email,
-      },
-    });
+  const user = await prisma.user.findFirst({
+    where: {
+      email: email,
+    },
+  });
+
+  if(user){
     return {
       id: String(user.id),
       email: user.email,
       username: user.username,
       password: user.password,
     };
-  } catch (error) {
-    console.error("Failed to fetch user:", error);
-    throw new Error("Failed to fetch user.");
+  } else {
+    return null
   }
 }
 
@@ -42,7 +42,6 @@ export const { auth, signIn, signOut } = NextAuth({
           if (passwordsMatch) return user;
         }
 
-        console.log("Invalid credentials");
         return null;
       },
     }),

@@ -27,13 +27,14 @@ export default function Form({ categories }: { categories: string[] }) {
               name="category"
               className="peer block w-full cursor-pointer rounded-md border text-gray-700 border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-400"
               defaultValue=""
+              data-testid="select-category"
               aria-describedby="category-error"
             >
               <option value="" disabled>
                 Select a category
               </option>
               {categories.map((category, idx) => (
-                <option key={idx} value={category}>
+                <option key={idx} value={category} data-testid={`${category}-category-option`}>
                   {category}
                 </option>
               ))}
@@ -62,6 +63,7 @@ export default function Form({ categories }: { categories: string[] }) {
                 name="amount"
                 type="number"
                 step="0.01"
+                data-testid="amount-input"
                 placeholder="Enter USD amount"
                 className="peer block w-full rounded-md border text-gray-700 border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-400"
                 aria-describedby="amount-error"
@@ -90,6 +92,7 @@ export default function Form({ categories }: { categories: string[] }) {
                 id="description"
                 name="description"
                 type="text"
+                data-testid="description-input"
                 placeholder="Macdonalds"
                 className="peer block w-full rounded-md border text-gray-700 border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-400"
                 aria-describedby="description-error"
@@ -118,6 +121,7 @@ export default function Form({ categories }: { categories: string[] }) {
                 id="date"
                 name="date"
                 type="datetime-local"
+                data-testid="date-input"
                 defaultValue={toLocalISOString(new Date())}
                 className="peer block w-full rounded-md border text-gray-700 border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-400"
                 aria-describedby="date-error"
@@ -143,7 +147,7 @@ export default function Form({ categories }: { categories: string[] }) {
         >
           Cancel
         </Link>
-        <Button type="submit">Create Transaction</Button>
+        <Button type="submit" data-testid="create-transaction-btn">Create Transaction</Button>
       </div>
     </form>
   );

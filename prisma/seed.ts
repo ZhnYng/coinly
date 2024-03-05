@@ -1,26 +1,31 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
+export const user = {
+  email: "test@gmail.com",
+  username: "test",
+  password: "123456",
+}
+
 const prisma = new PrismaClient()
 
 async function seed(){
-  const password = "123456"
   let insertedUser = {}
 
-  bcrypt.hash(password, 10, async (err, hash) => {
+  bcrypt.hash(user.password, 10, async (err, hash) => {
     if(err) console.error(err);
 
     insertedUser = await prisma.user.upsert({
       where: {
-        email: 'test@gmail.com',
+        email: user.email,
       },
       create: {
-        username: "test",
-        email: "test@gmail.com",
+        username: user.username,
+        email: user.email,
         password: hash
       },
       update: {
-        username: "test",
+        username: user.username,
         password: hash
       }
     })

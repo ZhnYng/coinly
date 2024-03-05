@@ -38,6 +38,7 @@ export default function LoginPage() {
                     id="email"
                     type="email"
                     name="email"
+                    data-testid="email-login"
                     placeholder="Enter your email address"
                     required
                   />
@@ -47,7 +48,7 @@ export default function LoginPage() {
               <div id="email-error" aria-live="polite" aria-atomic="true">
                 {errorMessage?.errors?.email &&
                   errorMessage.errors.email.map((error: string) => (
-                    <p className="mt-2 text-sm text-red-500" key={error}>
+                    <p className="mt-2 text-sm text-red-500" key={error} data-testid="email-error">
                       {error}
                     </p>
                   ))}
@@ -65,6 +66,7 @@ export default function LoginPage() {
                     id="password"
                     type="password"
                     name="password"
+                    data-testid="password-login"
                     placeholder="Enter password"
                     required
                     minLength={6}
@@ -75,7 +77,7 @@ export default function LoginPage() {
               <div id="password-error" aria-live="polite" aria-atomic="true">
                 {errorMessage?.errors?.password &&
                   errorMessage.errors.password.map((error: string) => (
-                    <p className="mt-2 text-sm text-red-500" key={error}>
+                    <p className="mt-2 text-sm text-red-500" key={error} data-testid="password-error">
                       {error}
                     </p>
                   ))}
@@ -95,7 +97,7 @@ export default function LoginPage() {
               {errorMessage?.message && (
                 <>
                   <AlertCircle className="h-5 w-5 text-red-500" />
-                  <p className="text-sm text-red-500">{errorMessage.message}</p>
+                  <p className="text-sm text-red-500" data-testid="login-error">{errorMessage.message}</p>
                 </>
               )}
             </div>
@@ -110,7 +112,7 @@ function LoginButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button className="mt-4 w-full" aria-disabled={pending}>
+    <Button className="mt-4 w-full" data-testid="login-btn" aria-disabled={pending}>
       Log in <ArrowRight className="ml-auto h-5 w-5 text-gray-50" />
     </Button>
   );
