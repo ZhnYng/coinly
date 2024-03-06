@@ -30,7 +30,7 @@ export function UpdateTransaction({ id }: { id: number }) {
 }
 
 export function DeleteTransaction({ id }: { id: number }) {
-  const deleteTransactionWithId = deleteTransaction.bind(null, 4);
+  const deleteTransactionWithId = deleteTransaction.bind(null, id);
   const [error, dispatch] = useFormState(deleteTransactionWithId, { message: '' });
 
   if(error.message){
