@@ -39,7 +39,7 @@ export function DeleteTransaction({ id }: { id: number }) {
 
   return (
     <form action={dispatch}>
-      <button className="rounded-md border p-2 hover:bg-gray-800">
+      <button className="rounded-md border p-2 hover:bg-gray-800" data-testid="delete-transaction-btn">
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-4" />
       </button>

@@ -165,7 +165,7 @@ export default function TransactionForm({
         >
           Cancel
         </Link>
-        <Button type="submit">Create Transaction</Button>
+        <Button type="submit">Update Transaction</Button>
       </div>
     </form>
     </>

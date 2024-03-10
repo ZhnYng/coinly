@@ -1,0 +1,14 @@
+[
+    {
+        "category": "Food",
+        "amount": "-23.12",
+        "description": "Bees Knees @ The Garage",
+        "date": "2010-10-10T00:00"
+    },
+    {
+        "category": "Apparel",
+        "amount": "-32.99",
+        "description": "Cream waffle polo tee",
+        "date": "2010-10-10T00:00"
+    }
+]

@@ -41,10 +41,10 @@ export default function Form({ categories }: { categories: string[] }) {
             </select>
             <Boxes className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-700" />
           </div>
-          <div id="customer-error" aria-live="polite" aria-atomic="true">
+          <div id="category-error" aria-live="polite" aria-atomic="true">
             {state.errors?.category &&
               state.errors.category.map((error: string) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
+                <p className="mt-2 text-sm text-red-500" key={error} data-testid="category-error">
                   {error}
                 </p>
               ))}
@@ -73,7 +73,7 @@ export default function Form({ categories }: { categories: string[] }) {
             <div id="amount-error" aria-live="polite" aria-atomic="true">
               {state.errors?.amount &&
                 state.errors.amount.map((error: string) => (
-                  <p className="mt-2 text-sm text-red-500" key={error}>
+                  <p className="mt-2 text-sm text-red-500" key={error} data-testid="amount-error">
                     {error}
                   </p>
                 ))}
@@ -102,7 +102,7 @@ export default function Form({ categories }: { categories: string[] }) {
             <div id="description-error" aria-live="polite" aria-atomic="true">
               {state.errors?.description &&
                 state.errors.description.map((error: string) => (
-                  <p className="mt-2 text-sm text-red-500" key={error}>
+                  <p className="mt-2 text-sm text-red-500" key={error} data-testid="description-error">
                     {error}
                   </p>
                 ))}
@@ -131,7 +131,7 @@ export default function Form({ categories }: { categories: string[] }) {
             <div id="date-error" aria-live="polite" aria-atomic="true">
               {state.errors?.date &&
                 state.errors.date.map((error: string) => (
-                  <p className="mt-2 text-sm text-red-500" key={error}>
+                  <p className="mt-2 text-sm text-red-500" key={error} data-testid="date-error">
                     {error}
                   </p>
                 ))}

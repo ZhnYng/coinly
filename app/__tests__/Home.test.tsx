@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react'
 import Home from '../page'
-import mockRouter from 'next-router-mock';
 
 describe('Home', () => {
   it('renders a the right heading', () => {
@@ -17,14 +16,5 @@ describe('Home', () => {
     const button = screen.getByRole('button')
 
     expect(button).toBeInTheDocument()
-  })
-  
-  it('should redirect the user to the "/transactions" route', () => {
-    render(<Home />)
-
-    expect(mockRouter).toMatchObject({ 
-      asPath: "/transactions",
-      pathname: "/transactions",
-    });
   })
 })

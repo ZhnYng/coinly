@@ -19,7 +19,7 @@ const FormSchema = z.object({
   date: z.coerce.date({
     invalid_type_error: "Please enter a valid date.",
   }),
-  description: z.string().refine((value) => value !== '', {
+  description: z.string().max(25).refine((value) => value !== '', {
     message: "Please enter a description."
   })
 });
@@ -161,8 +161,12 @@ export async function updateTransaction(
     }
   }
 
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
+  const month = date.getMonth()
+  const year = date.getFullYear()
+
+  // Revalidate the cache for the invoices page and redirect the user.
+  revalidatePath(`/transactions?month=${month+1}&&year=${year}`);
+  redirect(`/transactions?month=${month+1}&&year=${year}`);
 }
 
 export async function deleteTransaction(id: number) {
