@@ -141,12 +141,6 @@ export async function updateTransaction(
       })
 
       if (session.user.email === recordOwner?.user.email){
-        const result = await prisma.transaction.findMany({
-          where: {
-            id: Number(id)
-          }
-        })
-        console.log(result)
         await prisma.transaction.update({
           where: {
             id: Number(id),

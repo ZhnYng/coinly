@@ -9,7 +9,8 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:headless": "cypress run"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"

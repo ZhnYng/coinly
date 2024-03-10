@@ -83,7 +83,7 @@ describe("Create a transaction", () => {
       cy.getDataTestid('transaction-description-mobile').should('contain.text', transaction.description)
       cy.getDataTestid('transaction-date-mobile').should('contain.text', formatDateToLocal(transaction.date.split('T')[0]))
       
-      cy.getDataTestid("update-transaction-btn").first().click();
+      cy.getDataTestid("update-transaction-btn").first().should('be.visible').click();
       cy.url().should("match", /transactions\/\d+\/edit/);
 
       // Edit transaction
@@ -102,7 +102,7 @@ describe("Create a transaction", () => {
       const transaction = transactions[0];
 
       cy.visit(`/transactions?month=${new Date(transaction.date).getMonth()+1}&&year=${new Date(transaction.date).getFullYear()}`)
-      cy.getDataTestid("update-transaction-btn").first().click();
+      cy.getDataTestid("update-transaction-btn").first().should('be.visible').click();
       cy.url().should("match", /transactions\/\d+\/edit/);
 
       // Update transaction
@@ -122,7 +122,7 @@ describe("Create a transaction", () => {
       const transaction = transactions[0];
 
       cy.visit(`/transactions?month=${new Date(transaction.date).getMonth()+1}&&year=${new Date(transaction.date).getFullYear()}`)
-      cy.getDataTestid("update-transaction-btn").first().click();
+      cy.getDataTestid("update-transaction-btn").first().should('be.visible').click();
       cy.url().should("match", /transactions\/\d+\/edit/);
 
       // Update transaction
@@ -142,11 +142,11 @@ describe("Create a transaction", () => {
       const transaction = transactions[0];
 
       cy.visit(`/transactions?month=${new Date(transaction.date).getMonth()+1}&&year=${new Date(transaction.date).getFullYear()}`)
-      cy.getDataTestid("update-transaction-btn").first().click();
+      cy.getDataTestid("update-transaction-btn").first().should('be.visible').click();
       cy.url().should("match", /transactions\/\d+\/edit/);
 
       // Update transaction with a long description
-      cy.getDataTestid("description-input").type(
+      cy.getDataTestid("description-input").clear().type(
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
       ); // Example of a long description
       cy.getDataTestid("confirm-update-btn").click();
@@ -164,7 +164,7 @@ describe("Create a transaction", () => {
       const transaction = transactions[0];
 
       cy.visit(`/transactions?month=${new Date(transaction.date).getMonth()+1}&&year=${new Date(transaction.date).getFullYear()}`)
-      cy.getDataTestid("update-transaction-btn").first().click();
+      cy.getDataTestid("update-transaction-btn").first().should('be.visible').click();
       cy.url().should("match", /transactions\/\d+\/edit/);
 
       // Create transaction with a long description
