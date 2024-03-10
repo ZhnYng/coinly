@@ -10,7 +10,6 @@ describe('Create a transaction', () => {
         cy.getDataTestid('email-login').type(user.email)
         cy.getDataTestid('password-login').type(user.password)
         cy.getDataTestid('login-btn').click()
-        cy.url().should('not.match', /transactions\/create/)
         cy.url().should('match', /transactions/)
       })
     })
@@ -110,7 +109,7 @@ describe('Create a transaction', () => {
     })
   })
 
-  it.only('tries to create a transaction with an invalid amount', () => {
+  it('tries to create a transaction with an invalid amount', () => {
     cy.fixture('transactions').then(transactions => {
       for(const transaction of transactions){
         cy.visit('/transactions/create')

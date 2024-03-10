@@ -23,6 +23,7 @@ export function UpdateTransaction({ id }: { id: number }) {
     <Link
       href={`/transactions/${id}/edit`}
       className="rounded-md border p-2 hover:bg-gray-800"
+      data-testid="update-transaction-btn"
     >
       <PencilIcon className="w-5" />
     </Link>
