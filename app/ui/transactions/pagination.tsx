@@ -18,7 +18,7 @@ export default function Pagination() {
 
   useEffect(() => {
     replace(`${pathname}?month=${currentPage.month}&&year=${currentPage.year}`);
-  }, [])
+  })
 
   const createPageURL = (page: {
     month: number;

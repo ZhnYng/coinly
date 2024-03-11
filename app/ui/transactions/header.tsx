@@ -1,6 +1,7 @@
 import { PiggyBank } from "lucide-react";
 import Pagination from "./pagination";
 import { fetchMonthNet } from "@/app/lib/data";
+import { Suspense } from "react";
 
 export default function TransactionHeader(){
   return (
@@ -8,7 +9,9 @@ export default function TransactionHeader(){
       <div className="flex justify-between items-center">
         <PiggyBank size='30' className="w-20" />
         <div className="flex w-1/3 justify-between items-center">
-          <Pagination />
+          <Suspense>
+            <Pagination />
+          </Suspense>
         </div>
         <select name="cars" id="cars" className="bg-inherit text-white text-lg w-20">
           <option value="2023">2023</option>

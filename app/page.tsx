@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <main className="flex justify-center items-center flex-col text-center p-10 h-screen">
-      <h1 className="m-6">Click the button below if you do not get directed to '/transaction'</h1>
+      <h1 className="m-6">Click the button below if you do not get directed to &apos;/transaction&apos;</h1>
       <Button data-testid="btn-to-transactions" onClick={() => router.replace('transactions')}>
         Redirect
       </Button>
