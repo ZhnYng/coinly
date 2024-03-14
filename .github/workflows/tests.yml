@@ -3,52 +3,15 @@ name: Cypress Tests with Dependency and Artifact Caching
 on: push
 
 jobs:
-  install:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Cypress install
-        uses: cypress-io/github-action@v6
-        with:
-          # Disable running of tests within install job
-          runTests: false
-          build: npm run build # This command runs after cypress is installed
-
-      - name: Save build folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          if-no-files-found: error
-          path: .next
-
   cypress-run:
     runs-on: ubuntu-22.04
-    needs: install
-    strategy:
-      # don't fail the entire matrix on failure
-      fail-fast: false
-      matrix:
-        # run copies of the current job in parallel
-        containers: [1, 2, 3]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Download the build folder
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          install: false
-          record: true
-          parallel: true
-          group: "UI-Chrome"
+          build: npm run build
           start: npm start & wait-on http://localhost:3000
+          browser: chrome
         env:
           # pass GitHub token to detect new build vs re-run build
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
