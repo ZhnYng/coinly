@@ -10,6 +10,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up database
+        run: |
+          docker-compose up -d
+          npx prisma db seed
+
       - name: Create env file
         run: |
           touch .env
