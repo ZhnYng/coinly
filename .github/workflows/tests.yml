@@ -8,6 +8,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Create env file
+        run: |
+          touch .env
+          echo 'DATABASE_URL="postgresql://coinly:coinly@localhost:54320/coinly-db?schema=public"' >> .env
+          echo 'AUTH_SECRET=5ce9ImXXbuxUrVgl3mUN2Qegb9Ms3aUG5eC+TfTHip4=' >> .env
+          echo 'AUTH_URL=http://localhost:3000/api/auths' >> .env
+          cat .env
         
       - name: Cypress run
         uses: cypress-io/github-action@v6
