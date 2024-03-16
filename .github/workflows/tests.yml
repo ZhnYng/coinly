@@ -5,6 +5,7 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+    environment: testing
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -12,9 +13,9 @@ jobs:
       - name: Create env file
         run: |
           touch .env
-          echo 'DATABASE_URL="postgresql://coinly:coinly@localhost:54320/coinly-db?schema=public"' >> .env
-          echo 'AUTH_SECRET=5ce9ImXXbuxUrVgl3mUN2Qegb9Ms3aUG5eC+TfTHip4=' >> .env
-          echo 'AUTH_URL=http://localhost:3000/api/auths' >> .env
+          echo 'DATABASE_URL=${{ secrets.DATABASE_URL }}' >> .env
+          echo 'AUTH_SECRET=${{ secrets.AUTH_SECRET }}' >> .env
+          echo '=${{ secrets.AUTH_URL }}' >> .env
           cat .env
         
       - name: Cypress run
