@@ -18,6 +18,9 @@ jobs:
     environment: testing
     needs: checkout-and-install
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
       - name: Run Jest unit tests
         run: npm run test
 
@@ -37,7 +40,7 @@ jobs:
   setup-database:
     runs-on: ubuntu-22.04
     environment: testing
-    needs: checkout-and-install
+    needs: [checkout-and-install, create-env-file]
     steps:
       - name: Set up database
         run: |
