@@ -1,40 +1,23 @@
-name: Testing web application
+name: Testing the web application
 
 on: push
 
 jobs:
-  checkout-and-install:
+  testing:
     runs-on: ubuntu-22.04
     environment: testing
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
         
-      - name: Install Dependencies
-        run: npm ci
+      - name: Installing dependencies
+        run: |
+          npm ci
 
-  unit-tests:
-    runs-on: ubuntu-22.04
-    environment: testing
-    needs: checkout-and-install
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Unit tests
+        run: npm run tests
 
-      - name: Install Dependencies
-        run: npm ci
-        
-      - name: Run Jest unit tests
-        run: npm run test
-
-  create-env-file:
-    runs-on: ubuntu-22.04
-    environment: testing
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        
-      - name: Generate Environment File
+      - name: Create env file
         run: |
           touch .env
           echo 'DATABASE_URL=${{ secrets.DATABASE_URL }}' >> .env
@@ -42,32 +25,13 @@ jobs:
           echo 'AUTH_URL=${{ secrets.AUTH_URL }}' >> .env
           cat .env
 
-  setup-database:
-    runs-on: ubuntu-22.04
-    environment: testing
-    needs: [checkout-and-install, create-env-file]
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Set up Database
+      - name: Set up database
         run: |
           docker-compose down && docker-compose up -d
           npx prisma migrate dev --name init
           npx prisma db seed
-
-  run-cypress-tests:
-    runs-on: ubuntu-22.04
-    environment: testing
-    needs: [checkout-and-install, create-env-file, setup-database]
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Run Cypress Tests
+        
+      - name: End-to-end tests
         uses: cypress-io/github-action@v6
         with:
           build: npm run build
