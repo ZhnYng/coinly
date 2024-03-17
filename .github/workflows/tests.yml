@@ -25,6 +25,8 @@ jobs:
       - name: Set up database
         run: |
           docker-compose up -d
+          npx prisma migrate dev --name init
+          npx prisma db seed
         
       - name: Cypress run
         uses: cypress-io/github-action@v6
