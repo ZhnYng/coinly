@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-22.04
     environment: testing
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
         
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm ci
 
   unit-tests:
@@ -18,7 +18,7 @@ jobs:
     environment: testing
     needs: checkout-and-install
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
         
       - name: Run Jest unit tests
@@ -27,9 +27,11 @@ jobs:
   create-env-file:
     runs-on: ubuntu-22.04
     environment: testing
-    needs: checkout-and-install
     steps:
-      - name: Create env file
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Generate Environment File
         run: |
           touch .env
           echo 'DATABASE_URL=${{ secrets.DATABASE_URL }}' >> .env
@@ -40,20 +42,24 @@ jobs:
   setup-database:
     runs-on: ubuntu-22.04
     environment: testing
-    needs: [checkout-and-install, create-env-file]
     steps:
-      - name: Set up database
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Database
         run: |
           docker-compose down && docker-compose up -d
           npx prisma migrate dev --name init
           npx prisma db seed
 
-  end-to-end-tests:
+  run-cypress-tests:
     runs-on: ubuntu-22.04
     environment: testing
-    needs: [checkout-and-install, create-env-file, setup-database]
     steps:
-      - name: Cypress run
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
           build: npm run build
