@@ -24,7 +24,7 @@ jobs:
 
       - name: Set up database
         run: |
-          docker-compose up -d
+          docker-compose up -d --scale db=1 --force-recreate --build --remove-orphans --publish 54321:5432
           npx prisma migrate dev --name init
           npx prisma db seed
         
