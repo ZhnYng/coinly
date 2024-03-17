@@ -20,6 +20,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: npm ci
         
       - name: Run Jest unit tests
         run: npm run test
@@ -46,6 +49,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Set up Database
         run: |
