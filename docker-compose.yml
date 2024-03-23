@@ -6,7 +6,17 @@ services:
       - "54320:5432"
     volumes:
       - ./pgdata:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=coinly
-      - POSTGRES_PASSWORD=coinly
-      - POSTGRES_DB=coinly-db
+    env_file:
+      - .env.production
+  app:
+    image: coinly
+    build:
+      context: ./
+      target: production
+      dockerfile: Dockerfile
+    volumes:
+        - .:/app
+        - /app/node_modules
+        - /app/.next
+    ports:
+      - "3000:3000"

@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 
 export const user = {
   email: "test@gmail.com",
@@ -10,7 +10,7 @@ export const user = {
 const prisma = new PrismaClient()
 
 async function seed(){
-  bcrypt.hash(user.password, 10, async (err, hash) => {
+  bcryptjs.hash(user.password, 10, async (err, hash) => {
     if(err) console.error(err);
 
     await prisma.user.upsert({
