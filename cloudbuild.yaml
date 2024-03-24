@@ -1,0 +1,4 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/scenic-crossbar-418101/github.com/zhnyng/coinly:$COMMIT_SHA', '.',
+    '-v .:/app', '-v ./node_modules:/app/node_modules', '-v .next:/app/.next']
