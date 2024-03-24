@@ -7,7 +7,6 @@ EXPOSE 3000
 FROM base as builder
 WORKDIR /app
 COPY . .
-COPY .env.production .env
 RUN npm run build
 
 
