@@ -27,14 +27,13 @@ jobs:
 
       - name: Set up local database
         run: |
-          docker-compose -f docker-compose.db.yml up -d
+          docker-compose up -d
           npx prisma migrate dev --name init
           npx prisma db seed
         
       - name: End-to-end tests
         uses: cypress-io/github-action@v6
         with:
-          build: npm run build
           start: npm start
           browser: chrome
         env:
