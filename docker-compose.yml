@@ -3,6 +3,7 @@ services:
   db:
     image: coinly-db
     build:
+      context: ./
       dockerfile: ./db/Dockerfile
     volumes:
       - ./db/pgdata:/var/lib/postgresql/data
