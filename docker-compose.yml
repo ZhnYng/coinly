@@ -11,15 +11,17 @@ services:
       - .env
     ports:
       - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    env_file:
+      - .env
   app:
-    image: coinly-app
+    image: "coinly-app"
     build:
       context: ./
       target: production
       dockerfile: Dockerfile
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/.next
+    env_file:
+      - .env
     ports:
       - "3000:3000"

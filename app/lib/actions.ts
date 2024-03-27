@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import bcrypt from "bcryptjs";
+import bcryptjs from "bcryptjs";
 import { prisma } from "./_base";
 
 const FormSchema = z.object({
@@ -283,7 +283,7 @@ export async function authorization(
   }
   
   try {
-    bcrypt.hash(validatedFields.data.password, 10, async (err, hash) => {
+    bcryptjs.hash(validatedFields.data.password, 10, async (err, hash) => {
       await prisma.user.create({
         data: {...validatedFields.data, password: hash}
       })
