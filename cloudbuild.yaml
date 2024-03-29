@@ -8,10 +8,6 @@ steps:
       - '$_AR_HOSTNAME/$PROJECT_ID/$_AR_REPO/$_SERVICE_NAME:$COMMIT_SHA'
       - .
     secretEnv: ['coinly-env']
-    availableSecrets:
-      secretManager:
-      - versionName: projects/947467235473/secrets/coinly-env/versions/2
-        env: 'coinly-env'
   - name: gcr.io/cloud-builders/docker
     args:
       - push
@@ -31,3 +27,7 @@ steps:
 timeout: 1200s
 images:
   - '$_AR_HOSTNAME/$PROJECT_ID/$_AR_REPO/$_SERVICE_NAME:$COMMIT_SHA'
+availableSecrets:
+  secretManager:
+  - versionName: projects/947467235473/secrets/coinly-env/versions/2
+    env: 'coinly-env'
