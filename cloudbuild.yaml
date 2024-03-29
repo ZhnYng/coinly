@@ -1,4 +1,9 @@
 steps:
+  - name: ubuntu
+    entrypoint: bash
+    args: ["cat", "<<EOF", ">", ".env", "$$coinly-env", "EOF"]
+    secretEnv: ['coinly-env']
+
   - name: gcr.io/cloud-builders/docker
     args:
       - build
@@ -7,10 +12,9 @@ steps:
       - '-t'
       - '$_AR_HOSTNAME/$PROJECT_ID/$_AR_REPO/$_SERVICE_NAME:$COMMIT_SHA'
       - .
-    secretEnv: ['coinly-env']
   - name: gcr.io/cloud-builders/docker
     args:
-      - push
+    - push
       - '$_AR_HOSTNAME/$PROJECT_ID/$_AR_REPO/$_SERVICE_NAME:$COMMIT_SHA'
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     args:
@@ -27,6 +31,7 @@ steps:
 timeout: 1200s
 images:
   - '$_AR_HOSTNAME/$PROJECT_ID/$_AR_REPO/$_SERVICE_NAME:$COMMIT_SHA'
+
 availableSecrets:
   secretManager:
   - versionName: projects/947467235473/secrets/coinly-env/versions/4
