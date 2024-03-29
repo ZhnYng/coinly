@@ -1,10 +1,10 @@
 steps:
-  - name: ubuntu
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
     args:
-      - '-c'
-      - |
-        echo "$$coinly-env" | sed 's/\(.*\)/\1/' > .env
-    secretEnv: ['coinly-env']
+    - '-c'
+    - |
+      echo "$$coinly-env" | sed 's/\(.*\)/\1/' > .env
 
   - name: gcr.io/cloud-builders/docker
     args:
