@@ -1,6 +1,6 @@
 steps:
   - name: ubuntu
-    entrypoint: bash
+    entrypoint: [ "/bin/bash", "-l", "-c" ]
     args: ["cat", "<<EOF", ">", ".env", "$$coinly-env", "EOF"]
     secretEnv: ['coinly-env']
 
