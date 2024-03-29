@@ -1,6 +1,9 @@
 steps:
   - name: ubuntu
-    args: ["cat", "<<EOF", ">", ".env", "$$coinly-env", "EOF"]
+    args:
+      - '-c'
+      - |
+        echo "$$coinly-env" | sed 's/\(.*\)/\1/' > .env
     secretEnv: ['coinly-env']
 
   - name: gcr.io/cloud-builders/docker
