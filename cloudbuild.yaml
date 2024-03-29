@@ -1,4 +1,11 @@
 steps:
+  - name: node:latest
+    entrypoint: npm
+    args: ["run", "create-env"]
+    env:
+      - 'DATABASE_URL=${_DATABASE_URL}'
+      - 'AUTH_SECRET=${_AUTH_SECRET}'
+      - 'AUTH_URL=${_AUTH_URL}'
   - name: gcr.io/cloud-builders/docker
     args:
       - build

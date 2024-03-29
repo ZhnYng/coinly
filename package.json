@@ -10,7 +10,8 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "cypress:open": "cypress open",
-    "cypress:headless": "cypress run"
+    "cypress:headless": "cypress run",
+    "create-env": "printenv > .env"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
