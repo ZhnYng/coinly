@@ -7,14 +7,13 @@ FROM base as builder
 WORKDIR /app
 COPY . .
 RUN npm i
+RUN npx prisma generate
 RUN npm run build
 
 FROM base as production
 WORKDIR /app
 
 ENV NODE_ENV=production
-
-RUN npx prisma generate
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
