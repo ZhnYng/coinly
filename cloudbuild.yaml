@@ -1,11 +1,4 @@
 steps:
-  - name: node:latest
-    entrypoint: npm
-    args: ["run", "create-env"]
-    env:
-      - 'DATABASE_URL=${_DATABASE_URL}'
-      - 'AUTH_SECRET=${_AUTH_SECRET}'
-      - 'AUTH_URL=${_AUTH_URL}'
   - name: gcr.io/cloud-builders/docker
     args:
       - build
@@ -14,6 +7,11 @@ steps:
       - '-t'
       - '$_AR_HOSTNAME/$PROJECT_ID/$_AR_REPO/$_SERVICE_NAME:$COMMIT_SHA'
       - .
+    secretEnv: ['coinly-env']
+    availableSecrets:
+      secretManager:
+      - versionName: projects/947467235473/secrets/coinly-env/versions/2
+        env: 'coinly-env'
   - name: gcr.io/cloud-builders/docker
     args:
       - push
