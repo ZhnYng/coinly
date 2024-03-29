@@ -29,5 +29,5 @@ images:
   - '$_AR_HOSTNAME/$PROJECT_ID/$_AR_REPO/$_SERVICE_NAME:$COMMIT_SHA'
 availableSecrets:
   secretManager:
-  - versionName: projects/947467235473/secrets/coinly-env/versions/3
+  - versionName: projects/947467235473/secrets/coinly-env/versions/4
     env: 'coinly-env'
