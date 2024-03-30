@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import bcryptjs from "bcryptjs";
-import { prisma } from "./_base";
+import prisma from "./_base";
 
 const FormSchema = z.object({
   userId: z.number(),

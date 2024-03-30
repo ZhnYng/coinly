@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import { authConfig } from "./auth.config";
 import { z } from "zod";
 import bcryptjs from "bcryptjs";
-import { prisma } from "./app/lib/_base";
+import prisma from "./app/lib/_base";
 
 async function getUser(email: string) {
   const user = await prisma.user.findFirst({

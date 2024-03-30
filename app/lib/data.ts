@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { prisma } from "./_base";
+import prisma from "./_base";
 
 export async function fetchMonthlyTransactions(
   month: string,
