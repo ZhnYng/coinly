@@ -28,6 +28,7 @@ jobs:
       - name: Set up web application
         run: |
           docker-compose up --build -d
+          docker ps -a
           npx prisma migrate dev --name init
           npx prisma db seed
         
