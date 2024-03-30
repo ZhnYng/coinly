@@ -25,7 +25,7 @@ jobs:
           echo 'AUTH_URL=${{ secrets.AUTH_URL }}' >> .env
           cat .env
 
-      - name: Set up database
+      - name: Set up web application
         run: |
           docker-compose up --build -d
           npx prisma migrate dev --name init
