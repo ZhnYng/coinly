@@ -11,7 +11,7 @@ Coinly helps you track your spending by recording your income and expenses, prov
 
 ## **Try it out**
 
-Visit our site at [(link unavailable)]((link unavailable)) to start tracking your spending today!
+Visit our site at https://coinly-6qjrgdxr5a-uc.a.run.app/ to start tracking your spending today!
 
 ## **Features**
 
