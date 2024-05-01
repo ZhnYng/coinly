@@ -21,3 +21,9 @@ services:
       - .env
     ports:
       - "3000:3000"
+    networks:
+      - coinly_network
+
+networks:
+  coinly_network:
+    driver: bridge
