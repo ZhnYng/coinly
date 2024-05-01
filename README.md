@@ -38,10 +38,9 @@ Visit our site at [(link unavailable)]((link unavailable)) to start tracking you
 ## **Screenshots**
 
 ![Transactions page on desktop](demo/transactions-desktop.png)
-![Transactions/Home page](){: width="300" height="150"}
-<img src="https://github.com/ZhnYng/coinly/blob/main/demo/transactions.png" width="150">
-<img src="https://github.com/ZhnYng/coinly/blob/main/demo/create-transaction.png" width="150">
-<img src="https://github.com/ZhnYng/coinly/blob/main/demo/login" width="150">
+<img src="https://github.com/ZhnYng/coinly/blob/main/demo/transactions.png" width="300">
+<img src="https://github.com/ZhnYng/coinly/blob/main/demo/create-transaction.png" width="300">
+<img src="https://github.com/ZhnYng/coinly/blob/main/demo/login" width="300">
 
 ## **What I learned**
 
