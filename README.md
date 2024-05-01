@@ -2,22 +2,18 @@
 ==========================
 
 **Your Personal Spending Tracker**
----------------------
 
 Coinly is a spending tracker that allows you to record your transactions, income, and expenses, all in one place. Built with NextJS 14, TailwindCSS, and Prisma, Coinly follows best practices recommended by Vercel and is hosted on Google Cloud Platform.
 
 ## **How it works**
----------------
 
 Coinly helps you track your spending by recording your income and expenses, providing a clear picture of your financial situation.
 
 ## **Try it out**
-------------
 
 Visit our site at [(link unavailable)]((link unavailable)) to start tracking your spending today!
 
 ## **Features**
-----------
 
 ### Transaction Tracking
 
@@ -40,7 +36,6 @@ Visit our site at [(link unavailable)]((link unavailable)) to start tracking you
 * Automated testing and deployment with GitHub actions
 
 ## **Screenshots**
-----------
 
 ![Screenshot 1](demo/transactions.png)
 Transactions/Home page
@@ -55,7 +50,6 @@ Create transactions page
 Login page with Next Auth
 
 ## **What I learned**
-----------------
 
 Building Coinly taught me:
 
@@ -84,12 +78,10 @@ Building Coinly taught me:
 * How to set up a PostgreSQL database
 
 ## **Author**
-----------
 
-*Your Name*
+*Lim Zhen Yang*
 
 ## **Tech Stack**
----------------
 
 ### Frontend
 
