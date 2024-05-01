@@ -37,17 +37,10 @@ Visit our site at [(link unavailable)]((link unavailable)) to start tracking you
 
 ## **Screenshots**
 
-![Screenshot 1](demo/transactions.png)
-Transactions/Home page
-
-![Screenshot 1](demo/transactions-desktop.png)
-Transactions page on desktop
-
-![Screenshot 2](demo/create-transaction.png)
-Create transactions page
-
-![Screenshot 3](demo/login.png)
-Login page with Next Auth
+![Transactions page on desktop](demo/transactions-desktop.png)
+![Transactions/Home page](demo/transactions.png){: width="300" height="150"}
+![Create transactions page](demo/create-transaction.png){: width="300" height="150"}
+![Login page with Next Auth](demo/login.png){: width="300" height="150"}
 
 ## **What I learned**
 
