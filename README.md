@@ -1,102 +1,32 @@
-# **Coinly**
-==========================
+# **Coinly: Your Personal Spending Tracker**  
+Effortlessly track your income, expenses, and transactions with Coinly, an intuitive web application designed to simplify financial management. Built using modern technologies and best practices, Coinly helps you gain insights into your finances—all in one place.
 
-**Your Personal Spending Tracker**
+## **🌟 Features**  
 
-Coinly is a spending tracker that allows you to record your transactions, income, and expenses, all in one place. Built with NextJS 14, TailwindCSS, and Prisma, Coinly follows best practices recommended by Vercel and is hosted on Google Cloud Platform.
+- **💸 Transaction Tracking:** Record income and expenses with ease  
+- **📊 Financial Overview:** Get a comprehensive snapshot of your financial situation  
+- **💻 Simple Interface:** Intuitive design for a seamless user experience  
+- **🔒 Secure & Scalable:** Deployed on Google Cloud Platform  
+- **⚡ Automated CI/CD:** Continuous testing and deployment via GitHub Actions  
 
-## **How it works**
+## **🚀 Try It Out**  
+Start managing your finances now! Visit: [Coinly Live](https://coinly-6qjrgdxr5a-uc.a.run.app/)
 
-Coinly helps you track your spending by recording your income and expenses, providing a clear picture of your financial situation.
+## **📚 What I Learned**  
+Working on Coinly helped me gain hands-on experience with:
 
-## **Try it out**
+- **NextJS Best Practices:** Building modern web applications using recommended patterns  
+- **Prisma ORM:** Efficient database management through an object-relational mapper  
+- **Testing:** Writing reliable tests with Jest and Cypress for full coverage  
+- **CI/CD Pipelines:** Setting up automated testing and deployment with GitHub Actions  
+- **Google Cloud Platform:** Deploying a NextJS app on Google Cloud Run and managing PostgreSQL databases via Compute Engine  
 
-Visit our site at https://coinly-6qjrgdxr5a-uc.a.run.app/ to start tracking your spending today!
+## **🔧 Tech Stack**
 
-## **Features**
-
-### Transaction Tracking
-
-* Record your income and expenses
-
-### Financial Overview
-
-* Get a clear picture of your financial situation
-
-### Easy to Use
-
-* Simple and intuitive interface
-
-### Secure
-
-* Hosted on Google Cloud Platform
-
-### CI/CD Pipeline
-
-* Automated testing and deployment with GitHub actions
-
-## **Screenshots**
-
-![Transactions page on desktop](demo/transactions-desktop.png)
-<img src="https://github.com/ZhnYng/coinly/blob/main/demo/transactions.png" width="325">
-<img src="https://github.com/ZhnYng/coinly/blob/main/demo/create-transaction.png" width="325">
-<img src="https://github.com/ZhnYng/coinly/blob/main/demo/login.png" width="325">
-
-## **What I learned**
-
-Building Coinly taught me:
-
-### NextJS Best Practices
-
-* Writing good web application code
-
-### Prisma ORM
-
-* How to use an Object-Relational Mapper
-
-### Testing with Jest and Cypress
-
-* How to test web applications
-
-### CI/CD with GitHub actions
-
-* How to develop a continuous integration and deployment pipeline
-
-### Deployment on Google Cloud Run
-
-* How to deploy a NextJS application with continuous deployment
-
-### PostgreSQL on Google Compute Engine
-
-* How to set up a PostgreSQL database
-
-## **Author**
-
-*Lim Zhen Yang*
-
-## **Tech Stack**
-
-### Frontend
-
-* NextJS 14
-* TailwindCSS
-
-### Backend
-
-* Prisma
-* PostgreSQL
-
-### Deployment
-
-* Google Cloud Platform
-* Google Cloud Run
-* Google Compute Engine
-
-### Testing
-
-* Jest
-* Cypress
-
-### CI/CD
-
-* GitHub actions
+| **Category**     | **Technology**          |
+|------------------|-------------------------|
+| **Frontend**     | NextJS 14, TailwindCSS   |
+| **Backend**      | Prisma ORM, PostgreSQL   |
+| **Deployment**   | Google Cloud Platform, Google Cloud Run, Google Compute Engine |
+| **Testing**      | Jest, Cypress            |
+| **CI/CD**        | GitHub Actions           |
