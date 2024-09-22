@@ -60,7 +60,7 @@ export default function RootLayout({
             </div>
           </div>
         </div>
-        <div className="col-span-4 col-start-2 m-14">
+        <div className="col-span-4 col-start-2 flex justify-center w-full">
           {children}
         </div>
       </div>

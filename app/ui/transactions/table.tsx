@@ -3,7 +3,7 @@ import Image from 'next/image';
 // import InvoiceStatus from '@/app/ui/invoices/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchMonthlyTransactions } from '@/app/lib/data';
-import { Briefcase, Bus, HandCoins, Shirt, Utensils } from 'lucide-react';
+import { Briefcase, Bus, CircleOff, HandCoins, PencilIcon, Shirt, TrashIcon, Utensils } from 'lucide-react';
 import { DeleteTransaction, UpdateTransaction } from './buttons';
 
 export default async function TransactionsTable({
@@ -19,10 +19,10 @@ export default async function TransactionsTable({
     category: string
   ): JSX.Element | undefined => {
     const categoryIcons: Record<string, JSX.Element> = {
-      "Food": <Utensils size={28} className='mr-2'/>,
-      "Transportation": <Bus size={28} className='mr-2'/>,
-      "Income": <HandCoins size={28} className='mr-2'/>,
-      "Apparel": <Shirt size={28} className='mr-2'/>
+      "Food": <Utensils size={28} className='mr-2' />,
+      "Transportation": <Bus size={28} className='mr-2' />,
+      "Income": <HandCoins size={28} className='mr-2' />,
+      "Apparel": <Shirt size={28} className='mr-2' />
     }
     return categoryIcons[category];
   };
@@ -32,7 +32,7 @@ export default async function TransactionsTable({
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg p-2 m-4 md:pt-0">
           <div className="md:hidden">
-            {transactions?.map((transaction) => (
+            {transactions?.length !== 0 ? transactions?.map((transaction) => (
               <div
                 key={transaction.id}
                 className="w-full rounded-md bg-black p-4 mb-8"
@@ -59,7 +59,34 @@ export default async function TransactionsTable({
                   </div>
                 </div>
               </div>
-            ))}
+            ))
+            :
+            <div
+              className="w-full rounded-md bg-black p-4 mb-8"
+            >
+              <div className="flex items-center justify-between border-b pb-4">
+                <div>
+                  <div className="mb-2 flex items-center">
+                    <CircleOff size={28} className='mr-2'/>
+                    <p data-testid="transaction-description-mobile">No transactions found</p>
+                  </div>
+                  <p className="text-sm text-gray-500" data-testid="transaction-category-mobile">NA</p>
+                </div>
+              </div>
+              <div className="flex w-full items-center justify-between pt-4">
+                <div>
+                  <p className="text-xl font-medium" data-testid="transaction-amount-mobile">
+                    0.00
+                  </p>
+                  <p data-testid="transaction-date-mobile">NA</p>
+                </div>
+                <div className="flex justify-end gap-2">
+                  <PencilIcon className="w-5" />
+                  <TrashIcon className="w-4" />
+                </div>
+              </div>
+            </div>
+            }
           </div>
           <table className="hidden min-w-full text-white md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
@@ -82,7 +109,7 @@ export default async function TransactionsTable({
               </tr>
             </thead>
             <tbody className="bg-black">
-              {transactions?.map((transaction) => (
+              {transactions?.length !== 0 ? transactions?.map((transaction) => (
                 <tr
                   key={transaction.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
@@ -109,7 +136,34 @@ export default async function TransactionsTable({
                     </div>
                   </td>
                 </tr>
-              ))}
+              ))
+              :
+              <tr
+                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                >
+                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                    <div className="flex items-center gap-3">
+                      <CircleOff size={28} className='mr-2'/>
+                      <p>No transactions found</p>
+                    </div>
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    NA
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    NA
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    NA
+                  </td>
+                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                    <div className="flex justify-end gap-3">
+                      <PencilIcon className="w-5" />
+                      <TrashIcon className="w-4" />
+                    </div>
+                  </td>
+                </tr>
+            }
             </tbody>
           </table>
         </div>

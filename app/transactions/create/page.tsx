@@ -9,7 +9,7 @@ export default function Page() {
   const categories = ['Food', 'Transport', 'Apparel', 'Allowance', 'Freelance', 'Salary', 'Others']
  
   return (
-    <main className="p-10">
+    <main className="p-10 max-w-xl">
       <Button onClick={() => router.back()}>
         Back
       </Button>

@@ -14,7 +14,7 @@ export default async function Page({
 }) {
   const remaining = await fetchMonthNet(searchParams.month, searchParams.year)
   return (
-    <main>
+    <main className="py-8">
       {(remaining == 0 || remaining) && <div>
         <h4 className="font-bold text-center mt-3 text-lg">
           Net: {formatCurrency(remaining)}

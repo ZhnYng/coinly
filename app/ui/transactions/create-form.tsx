@@ -15,7 +15,7 @@ export default function Form({ categories }: { categories: string[] }) {
 
   return (
     <form action={dispatch}>
-      <div className="rounded-md bg-gray-950 py-4 md:p-6">
+      <div className="rounded-md py-4 md:p-6">
         {/* Category */}
         <div className="mb-4">
           <label htmlFor="category" className="mb-2 block text-sm font-medium">
